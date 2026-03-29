@@ -83,7 +83,7 @@ export async function extractTextFromImages(base64Images, signal = null) {
 export async function processPages(pages, onProgress = () => { }, signal = null) {
   const results = [];
   let completed = 0;
-  const CHUNK_SIZE = 3;
+  const CHUNK_SIZE = 5;
 
   let i = 0;
   while (i < pages.length) {
