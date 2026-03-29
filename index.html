@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Converter AI – Chuyển đổi PDF thông minh</title>
+  <meta name="description"
+    content="Chuyển đổi PDF sang Word, Excel, Text, Markdown bằng AI Gemini Pro. Hỗ trợ PDF scan và PDF có chữ." />
+  <meta name="theme-color" content="#7C3AED" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <defs>
+                <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                  <stop offset="0%" stop-color="#00D4FF" />
+                  <stop offset="100%" stop-color="#7C3AED" />
+                </linearGradient>
+              </defs>
+              <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
+              <path d="M8 8h10l6 6v12a2 2 0 01-2 2H10a2 2 0 01-2-2V8z" fill="rgba(255,255,255,0.9)" />
+              <path d="M18 8v6h6" fill="none" stroke="rgba(124,58,237,0.6)" stroke-width="1.5" />
+              <circle cx="16" cy="20" r="3" fill="#7C3AED" opacity="0.8" />
+              <path d="M14.5 20l1 1 2-2" stroke="white" stroke-width="1.2" fill="none" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="logo-text">
+            <h1>PDF Converter <span class="accent">AI</span></h1>
+            <p class="tagline">Developed by DucPhan - Powered by Gemini Pro</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="guideBtn" class="icon-btn" title="Hướng dẫn sử dụng">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </button>
+          <button id="settingsBtn" class="icon-btn" title="Cài đặt API Key">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Onboarding Guide (shown when no API key) -->
+      <section id="onboardingSection" class="section hidden">
+        <div class="onboarding-card">
+          <div class="onboarding-header">
+            <div class="onboarding-emoji">🚀</div>
+            <h2>Chào mừng bạn đến với PDF Converter AI!</h2>
+            <p class="onboarding-subtitle">Chuyển đổi PDF sang Word, Excel, Text bằng trí tuệ nhân tạo</p>
+          </div>
+          <div class="onboarding-steps">
+            <h3>📋 Thiết lập nhanh (chỉ 1 lần duy nhất)</h3>
+            <div class="guide-step">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-content">
+                <strong>Lấy API Key miễn phí</strong>
+                <p>Truy cập <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI
+                    Studio</a> → Đăng nhập Gmail → Click <strong>"Create API Key"</strong></p>
+                <p class="guide-note">💡 Hoàn toàn miễn phí, không cần thẻ tín dụng</p>
+              </div>
+            </div>
+            <div class="guide-step">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-content">
+                <strong>Copy API Key</strong>
+                <p>Sau khi tạo xong, click nút <strong>📋 Copy</strong> bên cạnh key</p>
+              </div>
+            </div>
+            <div class="guide-step">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-content">
+                <strong>Dán vào App</strong>
+                <p>Click nút bên dưới → Dán API key → Lưu cài đặt</p>
+              </div>
+            </div>
+          </div>
+          <button id="openSettingsFromGuide" class="convert-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+            <span>Nhập API Key ngay</span>
+          </button>
+          <div class="onboarding-faq">
+            <h3>❓ Câu hỏi thường gặp</h3>
+            <details>
+              <summary>API Key là gì?</summary>
+              <p>API Key là mã xác thực để app kết nối với AI của Google. Mỗi người tạo key riêng và key chỉ lưu trên
+                thiết bị của bạn.</p>
+            </details>
+            <details>
+              <summary>Có mất phí không?</summary>
+              <p>Không! Google cung cấp gói miễn phí đủ dùng cho cá nhân. Không cần thẻ tín dụng.</p>
+            </details>
+            <details>
+              <summary>Có an toàn không?</summary>
+              <p>API Key chỉ được lưu trên trình duyệt của bạn (localStorage). Không ai khác có thể thấy key của bạn.
+              </p>
+            </details>
+            <details>
+              <summary>Hỗ trợ những loại PDF nào?</summary>
+              <p>Cả PDF có chữ (text) và PDF scan (hình ảnh). AI sẽ tự nhận diện và trích xuất nội dung.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 1: Upload -->
+      <section id="uploadSection" class="section active">
+        <div class="section-header">
+          <span class="step-badge">1</span>
+          <h2>Tải lên PDF</h2>
+        </div>
+        <div id="dropZone" class="drop-zone">
+          <div class="drop-zone-content">
+            <div class="upload-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+            </div>
+            <p class="drop-text">Kéo & thả file PDF vào đây</p>
+            <p class="drop-subtext">hoặc</p>
+            <label for="fileInput" class="browse-btn">Chọn file</label>
+            <input type="file" id="fileInput" accept=".pdf" multiple hidden />
+            <p class="file-hint">Hỗ trợ PDF scan (hình ảnh) và PDF có chữ • Tối đa 50MB</p>
+          </div>
+        </div>
+        <!-- File Preview -->
+        <div id="filePreview" class="file-preview hidden">
+          <div id="fileList" class="file-list"></div>
+        </div>
+      </section>
+
+      <!-- Step 2: Format Selection -->
+      <section id="formatSection" class="section hidden">
+        <div class="section-header">
+          <span class="step-badge">2</span>
+          <h2>Chọn định dạng xuất</h2>
+        </div>
+        <div class="format-grid">
+          <button class="format-card selected" data-format="docx">
+            <div class="format-icon docx-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+              </svg>
+            </div>
+            <span class="format-name">DOCX</span>
+            <span class="format-desc">Word Document</span>
+          </button>
+
+          <button class="format-card" data-format="txt">
+            <div class="format-icon txt-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+            </div>
+            <span class="format-name">TXT</span>
+            <span class="format-desc">Plain Text</span>
+          </button>
+          <button class="format-card" data-format="md">
+            <div class="format-icon md-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="M6 8v8l3-3 3 3V8" />
+                <path d="M18 12l-2-2v4" />
+                <path d="M16 14l2-2" />
+              </svg>
+            </div>
+            <span class="format-name">Markdown</span>
+            <span class="format-desc">Có cấu trúc</span>
+          </button>
+        </div>
+        <button id="convertBtn" class="convert-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 4v6h6" />
+            <path d="M23 20v-6h-6" />
+            <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15" />
+          </svg>
+          <span>Bắt đầu chuyển đổi</span>
+        </button>
+      </section>
+
+      <!-- Step 3: Progress -->
+      <section id="progressSection" class="section hidden">
+        <div class="section-header">
+          <span class="step-badge">3</span>
+          <h2>Đang chuyển đổi</h2>
+        </div>
+        <div class="progress-container">
+          <div class="progress-circle">
+            <svg class="progress-ring" width="120" height="120">
+              <defs>
+                <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00D4FF" />
+                  <stop offset="100%" stop-color="#7C3AED" />
+                </linearGradient>
+              </defs>
+              <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+              <circle class="progress-ring-fill" cx="60" cy="60" r="52" />
+            </svg>
+            <div class="progress-percent">0%</div>
+          </div>
+          <div class="progress-details">
+            <p class="progress-status">Đang chuẩn bị...</p>
+            <p class="progress-page">Trang 0/0</p>
+          </div>
+          <div class="progress-steps">
+            <div class="p-step active" data-step="read">
+              <div class="p-step-dot"></div>
+              <span>Đọc PDF</span>
+            </div>
+            <div class="p-step" data-step="ocr">
+              <div class="p-step-dot"></div>
+              <span>AI OCR</span>
+            </div>
+            <div class="p-step" data-step="generate">
+              <div class="p-step-dot"></div>
+              <span>Tạo file</span>
+            </div>
+          </div>
+          <button id="cancelBtn" class="cancel-btn">Hủy</button>
+        </div>
+      </section>
+
+      <!-- Step 4: Results -->
+      <section id="resultSection" class="section hidden">
+        <div class="section-header">
+          <span class="step-badge done">✓</span>
+          <h2>Hoàn tất!</h2>
+        </div>
+        <div class="result-container">
+          <div class="result-success">
+            <div class="success-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <p class="result-message">Chuyển đổi thành công!</p>
+          </div>
+          <div id="resultFiles" class="result-files"></div>
+          <div class="result-preview">
+            <button id="togglePreview" class="preview-toggle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              Xem trước nội dung
+            </button>
+            <div id="previewContent" class="preview-content hidden"></div>
+          </div>
+          <button id="convertAnotherBtn" class="convert-another-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Chuyển đổi file khác
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Cài đặt</h3>
+          <button id="closeSettings" class="icon-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-group">
+            <label for="apiKeyInput">Gemini API Key</label>
+            <div class="api-key-input">
+              <input type="password" id="apiKeyInput" placeholder="Nhập API key..." />
+              <button id="toggleKeyVisibility" class="icon-btn small" title="Hiện/Ẩn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+            <p class="setting-hint">
+              Lấy API key miễn phí tại
+              <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>
+            </p>
+          </div>
+          <div class="setting-group">
+            <label for="modelSelect">Model AI</label>
+            <select id="modelSelect">
+              <option value="gemini-3-flash-preview" selected>⚡ Gemini 3.0 Flash Preview</option>
+              <option value="gemini-3.1-flash-lite-preview">🚀 Gemini 3.1 Flash Lite Preview</option>
+            </select>
+          </div>
+          <button id="testKeyBtn" class="test-key-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+            Kiểm tra kết nối
+          </button>
+          <div id="testResult" class="test-result hidden"></div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSettings" class="save-btn">Lưu cài đặt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
