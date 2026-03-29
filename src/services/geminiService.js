@@ -83,7 +83,7 @@ export async function extractTextFromImages(base64Images, signal = null) {
 export async function processPages(pages, onProgress = () => { }, signal = null) {
   const results = [];
   let completed = 0;
-  const CHUNK_SIZE = 5;
+  const CHUNK_SIZE = 3;
 
   let i = 0;
   while (i < pages.length) {
@@ -114,7 +114,7 @@ export async function processPages(pages, onProgress = () => { }, signal = null)
     try {
       if (i > 0) {
         // Chờ 5 giây trước khi gọi mẻ tiếp theo tránh 15 RPM rate limit
-        await new Promise(r => setTimeout(r, 5000));
+        await new Promise(r => setTimeout(r, 10000));
       }
 
       const chunkText = await extractTextFromImages(chunk, signal);
