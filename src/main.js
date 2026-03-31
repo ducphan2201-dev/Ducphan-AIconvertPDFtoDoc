@@ -1,3 +1,15 @@
+// Polyfill cho Promise.withResolvers (hỗ trợ trình duyệt cũ/ES2024)
+if (typeof Promise.withResolvers === 'undefined') {
+  Promise.withResolvers = function() {
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  };
+}
+
 // PDF Converter AI – Main Application
 import { getApiKey, setApiKey, getModel, setModel, hasApiKey } from './utils/storage.js';
 import { formatFileSize, downloadBlob, getFileNameWithoutExtension } from './utils/fileHelpers.js';
