@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/Ducphan-AIconvertPDFtoDoc/',
   root: '.',
   publicDir: 'public',
   build: {

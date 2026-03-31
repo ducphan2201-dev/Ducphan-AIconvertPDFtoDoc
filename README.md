@@ -1,9 +1,9 @@
 <div align="center">
 
-![PDF Converter AI v1.21](features_card_v121.png)
+![PDF Converter AI v1.22](features_card_v122.png)
 
 # 📄 PDF Converter AI
-### **Phiên bản 1.21** · *Developed by DucPhan*
+### **Phiên bản 1.22** · *Developed by DucPhan*
 
 > *Biến mọi bản Scan mờ nhạt thành File Word sắc nét — chỉ trong 1 cú Click.*
 

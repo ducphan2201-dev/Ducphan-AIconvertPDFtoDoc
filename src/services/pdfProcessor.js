@@ -45,11 +45,11 @@ export async function processPdf(file, onProgress = () => {}) {
     onProgress(i, totalPages);
     const page = await pdf.getPage(i);
     
-    // Try to extract text
+    // Try to extract text (Chỉ để tham khảo, Luôn tắt để ép dùng OCR bảo toàn Layout)
     const textContent = await page.getTextContent();
     const textItems = textContent.items.map(item => item.str).filter(s => s.trim());
-    const hasText = textItems.length > 500; // threshold cao: chỉ bỏ qua OCR nếu trang thực sự toàn text thuần
-    const text = hasText ? textItems.join(' ') : '';
+    const hasText = false; // Tắt tính năng tự trích text gốc để tránh làm vỡ Bảng biểu
+    const text = ''; 
     
     // Render to canvas at 200 DPI (good balance of quality vs size for API)
     const viewport = page.getViewport({ scale: 2.0 }); // ~200 DPI

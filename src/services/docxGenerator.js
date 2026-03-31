@@ -204,56 +204,59 @@ function parseMarkdown(text) {
 }
 
 /**
- * Parse inline formatting (bold, italic)
+ * Parse inline formatting safely using DOMParser to support infinite tag nesting
  */
 function parseInline(text, docx, state = null) {
-  // Dùng state ngoài (nếu truyền vào) hoặc sinh state cục bộ
   const rs = state || { isBold: false, isItalic: false, isUnderline: false, isCode: false };
-  
   const runs = [];
-  // Bắt Tag HTML, Tag bậy, Đoạn chữ, Dấu < đơn lẻ
-  const regex = /(<\/?(?:b|i|u|code)>)|(<[^>]+>)|([^<]+)|(<)/gi;
-  let match;
   
-  while ((match = regex.exec(text)) !== null) {
-    if (match[1]) {
-      const tag = match[1].toLowerCase();
-      if (tag === '<b>') rs.isBold = true;
-      if (tag === '</b>') rs.isBold = false;
-      if (tag === '<i>') rs.isItalic = true;
-      if (tag === '</i>') rs.isItalic = false;
-      if (tag === '<u>') rs.isUnderline = true;
-      if (tag === '</u>') rs.isUnderline = false;
-      if (tag === '<code>') rs.isCode = true;
-      if (tag === '</code>') rs.isCode = false;
-    } else if (match[2]) {
-      // Bắt các thẻ HTML rác khác (như <br>, </span>) và tiêu huỷ chúng để không in ra màn hình!
-      continue;
-    } else if (match[3] || match[4]) {
-      const content = match[3] || match[4];
-      if (content.length === 0) continue;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(text, 'text/html');
+  
+  function traverse(node, currentState) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (!node.textContent) return;
+      const content = node.textContent; // Do không cần parse bằng tay nữa nên giữ nguyên textContent
+      if (content.length === 0) return;
       
       const runOptions = {
         text: content,
-        bold: rs.isBold,
-        italics: rs.isItalic,
-        font: rs.isCode ? 'Consolas' : 'Times New Roman',
-        size: rs.isCode ? 20 : 22, // 11pt
+        bold: currentState.isBold,
+        italics: currentState.isItalic,
+        font: {
+          ascii: currentState.isCode ? 'Consolas' : 'Times New Roman',
+          hAnsi: currentState.isCode ? 'Consolas' : 'Times New Roman',
+          eastAsia: 'Microsoft YaHei', // Hỗ trợ Tiếng Trung
+          cs: 'Times New Roman'
+        },
+        size: currentState.isCode ? 20 : 22, // 11pt
       };
       
-      if (rs.isUnderline) {
+      if (currentState.isUnderline) {
         runOptions.underline = { type: docx.UnderlineType.SINGLE };
       }
-      if (rs.isCode) {
+      if (currentState.isCode) {
         runOptions.shading = { fill: 'E5E7EB' };
       }
       
       runs.push(new docx.TextRun(runOptions));
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+      const nextState = { ...currentState };
+      
+      if (tagName === 'b' || tagName === 'strong') nextState.isBold = true;
+      else if (tagName === 'i' || tagName === 'em') nextState.isItalic = true;
+      else if (tagName === 'u') nextState.isUnderline = true;
+      else if (tagName === 'code') nextState.isCode = true;
+      
+      node.childNodes.forEach(child => traverse(child, nextState));
     }
   }
   
+  doc.body.childNodes.forEach(child => traverse(child, rs));
+  
   if (runs.length === 0) {
-    runs.push(new docx.TextRun({ text: '', font: 'Times New Roman', size: 22 }));
+    runs.push(new docx.TextRun({ text: '', font: { ascii: 'Times New Roman', eastAsia: 'Microsoft YaHei' }, size: 22 }));
   }
   return runs;
 }
@@ -470,7 +473,11 @@ export async function generateDocx(pageTexts, filename, sourcePages = []) {
         children.push(new docx.Paragraph({
           children: [new docx.TextRun({ 
             text: el.content, 
-            font: 'Consolas', 
+            font: {
+              ascii: 'Consolas',
+              hAnsi: 'Consolas',
+              eastAsia: 'Microsoft YaHei'
+            },
             size: 18,
           })],
           shading: { fill: 'F3F4F6' },

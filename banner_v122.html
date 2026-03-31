@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Converter AI - Banner 1.22</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #060b19;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #ffffff;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .banner-container {
+      background: radial-gradient(circle at 50% -20%, rgba(30, 58, 138, 0.3), rgba(15, 23, 42, 0.8) 70%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 60px 50px 50px 50px;
+      width: 100%;
+      height: 100%;
+      max-width: 800px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    /* Subtle glow behind card */
+    .banner-container::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: #3b82f6;
+      filter: blur(150px);
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-container {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .logo-box {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #00D4FF 0%, #7C3AED 100%);
+      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 26px;
+      color: white;
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sparkle {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      color: #60a5fa;
+      font-size: 32px;
+      filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.8));
+    }
+
+    .title {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .title .ai-text {
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0px 0px 10px rgba(56, 189, 248, 0.4));
+    }
+
+    .version-info {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-bottom: 24px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      color: #cbd5e1;
+      font-style: italic;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .features-list {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      text-align: left;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    .feature-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      font-size: 17px;
+    }
+
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+
+    .feature-icon {
+      font-size: 22px;
+      margin-right: 16px;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    .feature-text {
+      color: #e2e8f0;
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .footer {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .footer-link {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="banner-container">
+    <div class="content-wrapper">
+      
+      <div class="logo-container">
+        <div class="logo-box">PDF</div>
+        <div class="sparkle">✨</div>
+      </div>
+
+      <h1 class="title">PDF Converter <span class="ai-text">AI</span></h1>
+      <div class="version-info">Phiên bản 1.22 • Developed by DucPhan</div>
+      
+      <p class="subtitle">Biến mọi bản Scan mờ nhạt thành File Word sắc nét — chỉ trong 1 cú Click.</p>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-icon">🌏</span>
+          <span class="feature-text"><span class="feature-title">Đa Ngôn Ngữ Siêu Việt</span> - Nhận diện hoàn hảo Tiếng Trung Phồn/Giản thể</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <span class="feature-text"><span class="feature-title">Khôi Phục Layout Kép</span> - Giữ 100% cấu trúc cho cả file Text gốc và Scan</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">✂️</span>
+          <span class="feature-text"><span class="feature-title">Bóc Tách Hình Ảnh</span> - Định vị và cắt dán con dấu, chữ ký chuẩn tọa độ</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🖋️</span>
+          <span class="feature-text"><span class="feature-title">An Toàn File Word</span> - Kiến trúc DOM Parser chống vỡ khối văn bản phức tạp</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔒</span>
+          <span class="feature-text"><span class="feature-title">Bảo Mật Tuyệt Đối</span> - 100% dữ liệu chỉ chạy qua bộ nhớ trình duyệt</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <span class="feature-text"><span class="feature-title">Xử Lý Bền Bỉ</span> - Tự động đếm ngược và phục hồi khi API bị nghẽn (Rate Limit)</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📱</span>
+          <span class="feature-text"><span class="feature-title">Cài Như App</span> - Hỗ trợ PWA tạo shortcut Desktop siêu tốc</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        Powered by Google Gemini Pro Vision • GitHub Pages • Mã nguồn mở<br>
+        <span class="footer-link">ducphan2201-dev.github.io/Ducphan-AIconvertPDFtoDoc</span>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
