@@ -207,7 +207,7 @@ function parseMarkdown(text) {
  * Parse inline formatting safely using DOMParser to support infinite tag nesting
  */
 function parseInline(text, docx, state = null) {
-  const rs = state || { isBold: false, isItalic: false, isUnderline: false, isCode: false };
+  const rs = state || { isBold: false, isItalic: false, isUnderline: false, isCode: false, isDeleted: false };
   const runs = [];
   
   const parser = new DOMParser();
@@ -238,6 +238,10 @@ function parseInline(text, docx, state = null) {
       if (currentState.isCode) {
         runOptions.shading = { fill: 'E5E7EB' };
       }
+      if (currentState.isDeleted) {
+        runOptions.color = 'FF0000';
+        runOptions.strike = true;
+      }
       
       runs.push(new docx.TextRun(runOptions));
     } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -248,6 +252,7 @@ function parseInline(text, docx, state = null) {
       else if (tagName === 'i' || tagName === 'em') nextState.isItalic = true;
       else if (tagName === 'u') nextState.isUnderline = true;
       else if (tagName === 'code') nextState.isCode = true;
+      else if (tagName === 'del' || tagName === 'strike') nextState.isDeleted = true;
       
       node.childNodes.forEach(child => traverse(child, nextState));
     }

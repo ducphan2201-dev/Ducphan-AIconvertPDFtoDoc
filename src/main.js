@@ -297,26 +297,32 @@ async function startConversion() {
       const baseName = getFileNameWithoutExtension(file.name);
       let blob, outputName;
       
+      const rawJoinedText = pageTexts.join('\n\n---\n\n');
+      const txtConvertedText = rawJoinedText.replace(/<del>|<\/del>|<strike>|<\/strike>/gi, '');
+      const mdConvertedText = rawJoinedText.replace(/<del>(.*?)<\/del>|<strike>(.*?)<\/strike>/gi, '~~$1$2~~');
+
       switch (selectedFormat) {
         case 'docx':
           blob = await generateDocx(pageTexts, baseName, pdfData.pages);
           outputName = `${baseName}.docx`;
           break;
         case 'txt':
-          blob = new Blob([pageTexts.join('\n\n---\n\n')], { type: 'text/plain;charset=utf-8' });
+          blob = new Blob([txtConvertedText], { type: 'text/plain;charset=utf-8' });
           outputName = `${baseName}.txt`;
           break;
         case 'md':
-          blob = new Blob([pageTexts.join('\n\n---\n\n')], { type: 'text/markdown;charset=utf-8' });
+          blob = new Blob([mdConvertedText], { type: 'text/markdown;charset=utf-8' });
           outputName = `${baseName}.md`;
           break;
       }
       
+      const displayPreviewText = pageTexts.join('\n\n').replace(/<del>|<\/del>|<strike>|<\/strike>/gi, '');
+
       convertedResults.push({
         blob,
         filename: outputName,
         size: blob.size,
-        text: pageTexts.join('\n\n'),
+        text: displayPreviewText,
         format: selectedFormat
       });
     }

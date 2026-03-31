@@ -14,6 +14,7 @@ QUY TẮC BẮT BUỘC:
    - Đoạn văn CANH ĐỀU 2 BÊN (Hợp đồng): Bọc trong tag <div align="justify">chữ</div>.
    - Chữ GẠCH CHÂN: Bọc trong tag <u>chữ</u>.
    - Chữ IN ĐẬM/IN NGHIÊNG: Dùng tag <b>chữ</b> và <i>chữ</i>.
+   - Chữ BỊ GẠCH XÓA / GẠCH BỎ: Bắt buộc bọc trong tag <del> và chứa dấu ngoặc đơn. Ví dụ: <del>(chữ bị gạch)</del>.
    - ĐỐI VỚI CHỮ VIẾT TAY: Phân tách nét chữ dính liền mờ nhòe. Dựa vào ngữ cảnh (Context) để phán đoán từ vựng ngoáy khó đọc. Giữ nguyên cấu trúc thụt lề của đoạn viết tay.
    - QUAN TRỌNG: ĐỂ THỤT LỀ, CHỈ DÙNG DẤU CÁCH (SPACE). NGHIÊM CẤM DÙNG MÃ HTML NHƯ "&nbsp;" HAY "&#160;". Nếu vi phạm toàn bộ file sẽ bị hỏng!
 3. KỸ THUẬT XỬ LÝ BẢNG BIỂU (NHÌN KỸ BẢN GỐC):
