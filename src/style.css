@@ -1255,7 +1255,10 @@ details p {
   display: flex;
   flex-direction: column;
   padding: var(--space-xl);
-  background: rgba(17, 24, 39, 0.4);
+  background-color: rgba(10, 14, 26, 0.7);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1264,6 +1267,14 @@ details p {
   text-decoration: none;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 1;
+}
+
+.promo-banner.promo-1 {
+  background-image: url('/bg-kashouzing.png');
+}
+
+.promo-banner.promo-2 {
+  background-image: url('/bg-kasfengshui.png');
 }
 
 .promo-glow {
