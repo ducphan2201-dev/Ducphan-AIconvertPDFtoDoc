@@ -1240,3 +1240,119 @@ details p {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* --- Promotional Banners --- */
+.promo-banners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-top: calc(var(--space-2xl) * 1.5);
+  animation: fadeSlideIn 0.8s ease 0.5s both;
+}
+
+.promo-banner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl);
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+}
+
+.promo-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.promo-banner.promo-1 .promo-glow {
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.15) 0%, transparent 60%);
+}
+
+.promo-banner.promo-2 .promo-glow {
+  background: radial-gradient(circle at center, rgba(124, 58, 237, 0.15) 0%, transparent 60%);
+}
+
+.promo-banner:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(30, 41, 59, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.promo-banner:hover .promo-glow {
+  opacity: 1;
+  animation: glowPulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(2%, 2%); }
+  100% { transform: scale(1.05) translate(-2%, -2%); }
+}
+
+.promo-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.promo-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.02em;
+}
+
+.promo-banner.promo-1 .promo-title {
+  background: linear-gradient(135deg, #00D4FF, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.promo-banner.promo-2 .promo-title {
+  background: linear-gradient(135deg, #FDE047, #F59E0B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.promo-subtitle {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.promo-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .promo-banners {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
